@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BD49245F2D9680D00094DC95 /* PhotosPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD49245E2D9680D00094DC95 /* PhotosPickerView.swift */; };
+		BD4924612D9683350094DC95 /* PhotoPickerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4924602D9683350094DC95 /* PhotoPickerWrapper.swift */; };
 		BDA7A9AE2D94C87F0079D24C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA7A9AB2D94C87F0079D24C /* ContentView.swift */; };
 		BDA7A9AF2D94C87F0079D24C /* DesignAssignmentForHatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA7A9AC2D94C87F0079D24C /* DesignAssignmentForHatchApp.swift */; };
 		BDA7A9B02D94C87F0079D24C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDA7A9A82D94C87F0079D24C /* Preview Assets.xcassets */; };
@@ -20,6 +22,7 @@
 		BDA7AA3F2D958C400079D24C /* PhotoGridItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA7AA3E2D958C400079D24C /* PhotoGridItem.swift */; };
 		BDA7AA532D9623F80079D24C /* UIApplication+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA7AA522D9623F80079D24C /* UIApplication+Ext.swift */; };
 		BDA7AA552D9638220079D24C /* InputSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA7AA542D9638220079D24C /* InputSheet.swift */; };
+		BDA7AA8E2D9665D80079D24C /* KeyboardResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA7AA8D2D9665D80079D24C /* KeyboardResponder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BD49245E2D9680D00094DC95 /* PhotosPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosPickerView.swift; sourceTree = "<group>"; };
+		BD4924602D9683350094DC95 /* PhotoPickerWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerWrapper.swift; sourceTree = "<group>"; };
 		BDA7A97B2D949C3B0079D24C /* DesignAssignmentForHatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DesignAssignmentForHatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDA7A98B2D949C3D0079D24C /* DesignAssignmentForHatchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DesignAssignmentForHatchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDA7A9952D949C3D0079D24C /* DesignAssignmentForHatchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DesignAssignmentForHatchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,6 +61,7 @@
 		BDA7AA3E2D958C400079D24C /* PhotoGridItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGridItem.swift; sourceTree = "<group>"; };
 		BDA7AA522D9623F80079D24C /* UIApplication+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Ext.swift"; sourceTree = "<group>"; };
 		BDA7AA542D9638220079D24C /* InputSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputSheet.swift; sourceTree = "<group>"; };
+		BDA7AA8D2D9665D80079D24C /* KeyboardResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardResponder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -130,6 +136,7 @@
 				BDA7A9A92D94C87F0079D24C /* Preview Content */,
 				BDA7A9AA2D94C87F0079D24C /* Assets.xcassets */,
 				BDA7A9AB2D94C87F0079D24C /* ContentView.swift */,
+				BDA7AA8C2D96657E0079D24C /* ViewModels */,
 				BDA7AA512D9623D30079D24C /* Extensions */,
 				BDA7A9AC2D94C87F0079D24C /* DesignAssignmentForHatchApp.swift */,
 				BDA7A9B22D94C8850079D24C /* Views */,
@@ -164,6 +171,8 @@
 				BDA7AA3A2D958C010079D24C /* PhotoLibraryViewModel.swift */,
 				BDA7AA3C2D958C1E0079D24C /* CustomPhotosPicker.swift */,
 				BDA7AA3E2D958C400079D24C /* PhotoGridItem.swift */,
+				BD49245E2D9680D00094DC95 /* PhotosPickerView.swift */,
+				BD4924602D9683350094DC95 /* PhotoPickerWrapper.swift */,
 			);
 			path = PhotosPicker;
 			sourceTree = "<group>";
@@ -174,6 +183,14 @@
 				BDA7AA522D9623F80079D24C /* UIApplication+Ext.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		BDA7AA8C2D96657E0079D24C /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				BDA7AA8D2D9665D80079D24C /* KeyboardResponder.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -323,13 +340,16 @@
 				BDA7AA3D2D958C1E0079D24C /* CustomPhotosPicker.swift in Sources */,
 				BDA7AA552D9638220079D24C /* InputSheet.swift in Sources */,
 				BDA7AA532D9623F80079D24C /* UIApplication+Ext.swift in Sources */,
+				BD4924612D9683350094DC95 /* PhotoPickerWrapper.swift in Sources */,
 				BDA7AA3F2D958C400079D24C /* PhotoGridItem.swift in Sources */,
+				BDA7AA8E2D9665D80079D24C /* KeyboardResponder.swift in Sources */,
 				BDA7A9AF2D94C87F0079D24C /* DesignAssignmentForHatchApp.swift in Sources */,
 				BDA7AA382D9578650079D24C /* PhotoPicker.swift in Sources */,
 				BDA7AA3B2D958C010079D24C /* PhotoLibraryViewModel.swift in Sources */,
 				BDA7A9B42D94C89F0079D24C /* TextInputView.swift in Sources */,
 				BDA7A9FE2D9533EA0079D24C /* ViewModel.swift in Sources */,
 				BDA7A9B72D94EFA20079D24C /* WrappedUITextView.swift in Sources */,
+				BD49245F2D9680D00094DC95 /* PhotosPickerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

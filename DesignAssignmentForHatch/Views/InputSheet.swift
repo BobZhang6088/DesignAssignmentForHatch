@@ -8,42 +8,87 @@
 import SwiftUI
 
 struct InputSheet: View {
-    @Binding var text: String
-    @State private var threelineHeight: CGFloat = 100
-    var placeholder: String
-    @State var fontSize: CGFloat = 18
-
-    @Namespace static var textEditorAnimation
-    
+    @State var message: String = ""
+    @FocusState var inputViewFocused
+    @State var showPicker: Bool = false
+    @State var photoPickerHeight: CGFloat = 0
+    @Binding var expanded: Bool
     var body: some View {
-        VStack {
-            HStack(alignment: .top) {
-                ZStack(alignment: .topLeading) {
-                    TextEditor(text: $text)
-                        .scrollContentBackground(.hidden) 
-                        .frame(maxHeight: .infinity)
-
-                    if text.isEmpty {
-                        Text(placeholder)
-                            .foregroundColor(Color.gray.opacity(0.5))
+        ZStack {
+            VStack {
+                HStack(alignment: .top) {
+                    TextInputView(text: $message, expanded: $expanded, placeholder: "Start Typing...")
+                        .focused($inputViewFocused)
+                        .gesture(
+                            DragGesture(coordinateSpace: .global)
+                                .onChanged { gesture in
+                                    print(gesture.startLocation)
+                                    if gesture.translation.height > 20 && inputViewFocused {
+                                        inputViewFocused = false
+                                        expanded = false
+                                    }
+                                    if gesture.translation.height < -20 && !inputViewFocused{
+                                        inputViewFocused = true
+                                    }
+                                }
+                                .onEnded { _ in
+                                }
+                        )
+                    Button(action: {
+                        withAnimation {
+                            expanded.toggle()
+                        }
+                    }) {
+                        if expanded {
+                            Image(systemName: "arrow.down.right.and.arrow.up.left")
+                        } else {
+                            Image(systemName: "arrow.up.backward.and.arrow.down.forward")
+                        }
+                    }
+                    .padding(.horizontal, 10)
+                    
+                }.padding()
+                
+                HStack {
+                    Button(action: {
+                        showPicker = true
+                        photoPickerHeight = UIScreen.main.bounds.height * 0.4
+                    }) {
+                        Image(systemName: "photo.artframe.circle")
+                            .padding(.vertical, 5)
+                            .font(.system(size: 30))
+                    }
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                    }) {
+                        Image(systemName: "paperplane.circle")
+                            .padding(.vertical,5)
+                            .font(.system(size: 30))
                     }
                 }
-                .font(.system(size: fontSize))
-                
-                Button(action: {
-                    // Add your action
-                }) {
-                    Image(systemName: "arrow.down.right.and.arrow.up.left")
-                }
-                .padding(.horizontal, 10)
+                .padding(.horizontal)
             }
-            Spacer()
+            .background(Color(.systemGray6))
+            .clipShape(RoundedCorner(radius: 20, corners: [.topLeft, .topRight]))
+            .background(alignment: .top) {
+                RoundedCorner(radius: 20, corners: [.topLeft, .topRight])
+                    .fill(Color(.systemGray6))
+                    .frame(height: 30)
+                    .shadow(color:.black.opacity(0.1), radius: 3, x: 0, y: -4)
+            }
+            .padding(.top, expanded ? 44: 0)
+            .onChange(of: expanded) { newValue in
+                inputViewFocused = true
+            }
         }
-        .padding()
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        
     }
 }
 
 #Preview {
-    InputSheet(text: .constant(""), placeholder: "Start Typing...")
+    InputSheet(expanded: .constant(false))
 }
+
+

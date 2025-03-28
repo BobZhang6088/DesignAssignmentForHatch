@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TextInputView: View {
     @Binding var text: String
+    @Binding var expanded: Bool
     @State private var threelineHeight: CGFloat = 0
     var placeholder: String
     @State var fontSize: CGFloat = 18
@@ -36,6 +37,9 @@ struct TextInputView: View {
     var body: some View {
         ZStack(alignment: .topLeading) {
             WrappedUITextView(text: $text, fontSize: fontSize) { deleting, height in
+                if expanded {
+                    return
+                }
                 var offset:CGFloat = 0
                 if deleting {
                     if height <= threelineHeight/2 && fontSize < 18{
@@ -53,7 +57,7 @@ struct TextInputView: View {
                 }
             }
                 .id(fontSize)
-                .frame(height: threelineHeight)
+                .frame(maxHeight: expanded ?.infinity: threelineHeight)
                 .transition(.opacity)
             if text.isEmpty {
                 Text(placeholder)
@@ -69,5 +73,5 @@ struct TextInputView: View {
 }
 
 #Preview {
-    TextInputView(text: .constant(""), placeholder: "Hi")
+    TextInputView(text: .constant(""),expanded: .constant(false), placeholder: "Hi")
 }
