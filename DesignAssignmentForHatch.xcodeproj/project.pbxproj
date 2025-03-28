@@ -19,6 +19,7 @@
 		BDA7AA3D2D958C1E0079D24C /* CustomPhotosPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA7AA3C2D958C1E0079D24C /* CustomPhotosPicker.swift */; };
 		BDA7AA3F2D958C400079D24C /* PhotoGridItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA7AA3E2D958C400079D24C /* PhotoGridItem.swift */; };
 		BDA7AA532D9623F80079D24C /* UIApplication+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA7AA522D9623F80079D24C /* UIApplication+Ext.swift */; };
+		BDA7AA552D9638220079D24C /* InputSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA7AA542D9638220079D24C /* InputSheet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +55,7 @@
 		BDA7AA3C2D958C1E0079D24C /* CustomPhotosPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPhotosPicker.swift; sourceTree = "<group>"; };
 		BDA7AA3E2D958C400079D24C /* PhotoGridItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGridItem.swift; sourceTree = "<group>"; };
 		BDA7AA522D9623F80079D24C /* UIApplication+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Ext.swift"; sourceTree = "<group>"; };
+		BDA7AA542D9638220079D24C /* InputSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputSheet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -142,6 +144,7 @@
 				BDA7A9B52D94EF820079D24C /* UIKit */,
 				BDA7A9B32D94C89F0079D24C /* TextInputView.swift */,
 				BDA7A9FD2D9533EA0079D24C /* ViewModel.swift */,
+				BDA7AA542D9638220079D24C /* InputSheet.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -318,6 +321,7 @@
 			files = (
 				BDA7A9AE2D94C87F0079D24C /* ContentView.swift in Sources */,
 				BDA7AA3D2D958C1E0079D24C /* CustomPhotosPicker.swift in Sources */,
+				BDA7AA552D9638220079D24C /* InputSheet.swift in Sources */,
 				BDA7AA532D9623F80079D24C /* UIApplication+Ext.swift in Sources */,
 				BDA7AA3F2D958C400079D24C /* PhotoGridItem.swift in Sources */,
 				BDA7A9AF2D94C87F0079D24C /* DesignAssignmentForHatchApp.swift in Sources */,

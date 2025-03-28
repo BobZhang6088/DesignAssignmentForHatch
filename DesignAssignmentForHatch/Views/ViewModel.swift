@@ -16,6 +16,7 @@ class ViewModel: ObservableObject {
     @Published var showPicker = false
     @Published var selectedImage: UIImage?
     @Published var photoPickerHeight: CGFloat = 0
+    @Published var showInputSheet: Bool = false
     
     var globalFrameOfTextInputView: CGRect = .zero
     private var cancellables: Set<AnyCancellable> = []

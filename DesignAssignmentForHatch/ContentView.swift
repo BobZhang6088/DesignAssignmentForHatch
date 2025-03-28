@@ -18,7 +18,7 @@ struct ContentView: View {
             VStack {
                 Spacer()
                 
-                //                 Quick reply chips
+                // Quick reply chips
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 10) {
                         ForEach(0..<4) { _ in
@@ -38,52 +38,33 @@ struct ContentView: View {
                 // Text input area
                 
                 VStack {
-                    TextInputView(text: $viewModel.message, placeholder: "Start Typing...")
-                        .focused($inputViewFocused)
-                        .gesture(
-                            DragGesture(coordinateSpace: .global)
-                            
-                                .onChanged { gesture in
-                                    print(gesture.startLocation)
-                                    //                                    let startX = gesture.startLocation.x + viewModel.globalFrameOfTextInputView.origin.x
-                                    //                                    let startY = gesture.startLocation.y + viewModel.globalFrameOfTextInputView.origin.y
-                                    //                                    let currenY = gesture.location.y + viewModel.globalFrameOfTextInputView.origin.y
-                                    //
-                                    if gesture.translation.height > 20 && inputViewFocused {
-                                        inputViewFocused = false
+                    HStack(alignment: .top) {
+                        TextInputView(text: $viewModel.message, placeholder: "Start Typing...")
+                            .focused($inputViewFocused)
+                            .gesture(
+                                DragGesture(coordinateSpace: .global)
+                                    .onChanged { gesture in
+                                        print(gesture.startLocation)
+                                        if gesture.translation.height > 20 && inputViewFocused {
+                                            inputViewFocused = false
+                                        }
+                                        if gesture.translation.height < -20 && !inputViewFocused{
+                                            inputViewFocused = true
+                                        }
                                     }
-                                    if gesture.translation.height < -20 && !inputViewFocused{
-                                        inputViewFocused = true
+                                    .onEnded { _ in
+                                        viewModel.bottomPadding = 0
                                     }
-                                    //                                    viewModel.bottomPadding -= gesture.translation.height
-                                    //                                    print(viewModel.bottomPadding)
-                                    //                                    print(gesture.translation.height)
-                                    //                                    print(viewModel.bottomPadding - gesture.translation.height)
-                                    //                                    viewModel.bottomPadding = -gesture.translation.height
-                                    //                                    offset = gesture.translation
-                                    //                                    viewModel.holdingKeyborad = true
-                                    //                                    print(gesture.translation)
-                                    //                                    if viewModel.bottomPadding > 0 {
-                                    //
-                                    //                                    }
-                                }
-                                .onEnded { _ in
-                                    // 如果需要恢复原位，可以加动画
-                                    // withAnimation {
-                                    //     offset = .zero
-                                    // }
-                                    //                                    viewModel.holdingKeyborad = false
-                                    //                                    if viewModel.keyboardHeight > 0 {
-                                    //                                        viewModel.bottomPadding = viewModel.keyboardHeight
-                                    //                                    }
-                                    viewModel.bottomPadding = 0
-                                }
-                        )
-                    //                        .onGeometryChange(for: CGRect.self, of: { geo in
-                    //                            return geo.frame(in: .global)
-                    //                        }, action: { newValue in
-                    //                            viewModel.globalFrameOfTextInputView = newValue
-                    //                        })
+                            )
+                        Button(action: {
+                            viewModel.showInputSheet = true
+                        }) {
+                            Image(systemName: "arrow.up.backward.and.arrow.down.forward")
+                        }
+                        .padding(.horizontal, 10)
+                        
+                    }.padding()
+                    
                     HStack {
                         Button(action: {
                             viewModel.showPicker = true
@@ -103,7 +84,7 @@ struct ContentView: View {
                                 .font(.system(size: 30))
                         }
                     }
-                    .padding(.horizontal, 20)
+                    .padding(.horizontal)
                     
                 }
                 .background(Color(.systemGray6))
@@ -133,19 +114,13 @@ struct ContentView: View {
                 let height = UIScreen.main.bounds.height - newValue.origin.y - 34
                 pickerHeight = height > originalPhotoPickerHeight ? originalPhotoPickerHeight : height                
             }
-//            PhotoPicker(selectedImage: $viewModel.selectedImage)
-//                .presentationDetents([.medium, .large])
-//                .presentationDragIndicator(.visible)              // 顶部抓手
-//                .presentationBackgroundInteraction(.enabled)
-//                .onGeometryChange(for:CGRect.self) { proxy in
-//                    proxy.frame(in: .global)
-//                } action: { newValue in
-//                    print(newValue)
-//                }
+
         }
-        
-        //        .padding(.bottom, viewModel.bottomPadding)
-        //        .ignoresSafeArea(.keyboard)
+        .sheet(isPresented: $viewModel.showInputSheet) {
+            InputSheet(text: $viewModel.message, placeholder: "Start Typing...")
+                .background(Color(.systemGray6))
+            
+        }
     }
 }
 
