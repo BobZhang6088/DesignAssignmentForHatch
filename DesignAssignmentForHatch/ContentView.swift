@@ -130,13 +130,8 @@ struct ContentView: View {
             .presentationDragIndicator(.visible)
             .presentationBackgroundInteraction(.enabled)
             .onPreferenceChange(ViewPositionKey.self) { newValue in
-                print("Presented view frame changed: \(newValue)")
-//                viewModel.photoPickerHeight = newValue.height
-                let height = UIScreen.main.bounds.height - newValue.origin.y
-                
-                pickerHeight = height > originalPhotoPickerHeight ? originalPhotoPickerHeight : height
-                print(pickerHeight)
-                
+                let height = UIScreen.main.bounds.height - newValue.origin.y - 34
+                pickerHeight = height > originalPhotoPickerHeight ? originalPhotoPickerHeight : height                
             }
 //            PhotoPicker(selectedImage: $viewModel.selectedImage)
 //                .presentationDetents([.medium, .large])
