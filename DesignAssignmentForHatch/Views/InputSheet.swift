@@ -10,11 +10,14 @@ import SwiftUI
 struct InputSheet: View {
     @State var message: String = ""
     @FocusState var inputViewFocused
-    @State var showPicker: Bool = false
     @State var photoPickerHeight: CGFloat = 0
+//    @State var photoPlaceholderHeight: CGFloat = 0
+
     @Binding var expanded: Bool
+    @State var presentingImagePicker: Bool = false
+    @Binding var imagePickerExpanded: Bool
     var body: some View {
-        ZStack {
+//        ZStack {
             VStack {
                 HStack(alignment: .top) {
                     TextInputView(text: $message, expanded: $expanded, placeholder: "Start Typing...")
@@ -51,8 +54,9 @@ struct InputSheet: View {
                 
                 HStack {
                     Button(action: {
-                        showPicker = true
-                        photoPickerHeight = UIScreen.main.bounds.height * 0.4
+                        withAnimation {
+                            presentingImagePicker = true
+                        }
                     }) {
                         Image(systemName: "photo.artframe.circle")
                             .padding(.vertical, 5)
@@ -69,6 +73,12 @@ struct InputSheet: View {
                     }
                 }
                 .padding(.horizontal)
+                if presentingImagePicker {
+                    Color.clear
+                        .frame(height:photoPickerHeight)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                        .animation(.easeInOut(duration: 0.3), value: presentingImagePicker)
+                }
             }
             .background(Color(.systemGray6))
             .clipShape(RoundedCorner(radius: 20, corners: [.topLeft, .topRight]))
@@ -82,13 +92,42 @@ struct InputSheet: View {
             .onChange(of: expanded) { newValue in
                 inputViewFocused = true
             }
+            .onChange(of: presentingImagePicker) { newValue in
+                if newValue {
+                        withAnimation {
+                            inputViewFocused = false
+                        }
+                }
+            }
+            .onChange(of: inputViewFocused) { newValue in
+                if newValue {
+                        withAnimation {
+                            presentingImagePicker = false
+                        }
+                }
+            }
+//            .padding(.bottom, 200)
+//            .offset(CGSizeMake(0, -200))
+            .overlay(alignment: .bottom) {
+                if presentingImagePicker {
+                    PhotoPickerWrapper(presenting: $presentingImagePicker, expanded: $imagePickerExpanded, height: $photoPickerHeight)
+                        .background(Color(.systemGray6))
+                        .frame(alignment: .top)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                        .animation(.easeInOut(duration: 0.3), value: presentingImagePicker)
+//                }
+                    
+            }
+            
+            
+            
         }
         
     }
 }
 
 #Preview {
-    InputSheet(expanded: .constant(false))
+    InputSheet(expanded: .constant(false), imagePickerExpanded: .constant(false))
 }
 
 

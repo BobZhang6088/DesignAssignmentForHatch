@@ -17,7 +17,8 @@ struct ContentView: View {
 //    @StateObject private var keyboard = KeyboardResponder()
     @State var inputViewFrame: CGRect = .zero
     @State var inputViewExpanded: Bool = false
-    
+    @State var imagePickerExpanded: Bool = false
+
     var body: some View {
         ZStack(alignment:.bottom) {
             NavigationStack {
@@ -45,10 +46,10 @@ struct ContentView: View {
                 .navigationTitle("Chat")
                 .navigationBarTitleDisplayMode(.inline)
             }
-            if inputViewExpanded {
+            if inputViewExpanded || imagePickerExpanded {
                 Color.black.opacity(0.5).edgesIgnoringSafeArea(.all)
             }
-            InputSheet(expanded: $inputViewExpanded)
+            InputSheet(expanded: $inputViewExpanded, imagePickerExpanded: $imagePickerExpanded)
                 .onGeometryChange(for: CGRect.self) { proxy in
                     proxy.frame(in: .local)
                 } action: { newValue in
