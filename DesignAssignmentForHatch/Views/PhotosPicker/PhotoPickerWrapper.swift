@@ -6,11 +6,15 @@
 //
 
 import SwiftUI
+import Photos
 
 struct PhotoPickerWrapper: View {
     @Binding var presenting: Bool
     @Binding var expanded: Bool
     @Binding var height: CGFloat
+    @Binding var selectedAssets: [PHAsset]
+    let onSelection: ([PHAsset]) -> Void
+    
     @State var realHeight: CGFloat = UIScreen.main.bounds.height * 0.4
     @State var enableHighPriorityGesture: Bool = true
     
@@ -24,9 +28,7 @@ struct PhotoPickerWrapper: View {
                 .frame(width: 40, height: 6)
                 .foregroundColor(.gray)
                 .padding(8)
-            PhotosPickerView(maxSelection: 1) { images in
-                
-            }
+            PhotosPickerView(maxSelection: 9, selectedAssets: $selectedAssets, onSelection: onSelection)
             .onScrollGeometryChange(for: CGFloat.self) { geometry in
                 geometry.contentOffset.y
             } action: { oldValue, newValue in

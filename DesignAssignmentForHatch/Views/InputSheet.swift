@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Photos
 
 struct InputSheet: View {
     @State var message: String = ""
@@ -16,6 +17,8 @@ struct InputSheet: View {
     @Binding var expanded: Bool
     @State var presentingImagePicker: Bool = false
     @Binding var imagePickerExpanded: Bool
+    
+    @State var selectedImages: [PHAsset] = []
     var body: some View {
 //        ZStack {
             VStack {
@@ -38,9 +41,7 @@ struct InputSheet: View {
                                 }
                         )
                     Button(action: {
-                        withAnimation {
-                            expanded.toggle()
-                        }
+                        expanded.toggle()
                     }) {
                         if expanded {
                             Image(systemName: "arrow.down.right.and.arrow.up.left")
@@ -51,12 +52,12 @@ struct InputSheet: View {
                     .padding(.horizontal, 10)
                     
                 }.padding()
-                
+                if !selectedImages.isEmpty {
+                    SelectedImagesViews(images: $selectedImages)
+                }
                 HStack {
                     Button(action: {
-                        withAnimation {
-                            presentingImagePicker = true
-                        }
+                        presentingImagePicker = true
                     }) {
                         Image(systemName: "photo.artframe.circle")
                             .padding(.vertical, 5)
@@ -76,8 +77,8 @@ struct InputSheet: View {
                 if presentingImagePicker {
                     Color.clear
                         .frame(height:photoPickerHeight)
-                        .transition(.move(edge: .bottom).combined(with: .opacity))
-                        .animation(.easeInOut(duration: 0.3), value: presentingImagePicker)
+//                        .transition(.move(edge: .bottom).combined(with: .opacity))
+//                        .animation(.easeInOut(duration: 0.3), value: presentingImagePicker)
                 }
             }
             .background(Color(.systemGray6))
@@ -94,27 +95,30 @@ struct InputSheet: View {
             }
             .onChange(of: presentingImagePicker) { newValue in
                 if newValue {
-                        withAnimation {
-                            inputViewFocused = false
-                        }
+                    inputViewFocused = false
                 }
             }
             .onChange(of: inputViewFocused) { newValue in
                 if newValue {
-                        withAnimation {
-                            presentingImagePicker = false
-                        }
+                    presentingImagePicker = false
                 }
             }
 //            .padding(.bottom, 200)
 //            .offset(CGSizeMake(0, -200))
             .overlay(alignment: .bottom) {
                 if presentingImagePicker {
-                    PhotoPickerWrapper(presenting: $presentingImagePicker, expanded: $imagePickerExpanded, height: $photoPickerHeight)
+                    PhotoPickerWrapper(presenting: $presentingImagePicker, expanded: $imagePickerExpanded, height: $photoPickerHeight, selectedAssets: $selectedImages, onSelection: { images in
+                        if imagePickerExpanded {
+
+                        } else {
+                            presentingImagePicker = false
+                            inputViewFocused = true
+                        }
+                    })
                         .background(Color(.systemGray6))
                         .frame(alignment: .top)
                         .transition(.move(edge: .bottom).combined(with: .opacity))
-                        .animation(.easeInOut(duration: 0.3), value: presentingImagePicker)
+                        .animation(.easeInOut(duration: 0.2), value: presentingImagePicker)
 //                }
                     
             }

@@ -15,17 +15,18 @@ struct PhotoGridItem: View {
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            if let thumbnail = thumbnail {
-                Image(uiImage: thumbnail)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 110, height: 110)
-                    .clipped()
-            } else {
-                Rectangle()
-                    .fill(Color.gray.opacity(0.3))
-                    .frame(width: 110, height: 110)
-            }
+            Rectangle()
+                .fill(Color.gray.opacity(0.3))
+                .frame(maxWidth: .infinity)
+                .aspectRatio(1, contentMode: .fill)
+                .overlay {
+                    if let thumbnail = thumbnail {
+                        Image(uiImage: thumbnail)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                    }
+                }
+                .clipped()
 
             if isSelected {
                 Image(systemName: "checkmark.circle.fill")
@@ -39,6 +40,7 @@ struct PhotoGridItem: View {
                 self.thumbnail = image
             }
         }
+        .contentShape(Rectangle()) 
         .onTapGesture {
             onTap()
         }

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		BD49245F2D9680D00094DC95 /* PhotosPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD49245E2D9680D00094DC95 /* PhotosPickerView.swift */; };
 		BD4924612D9683350094DC95 /* PhotoPickerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4924602D9683350094DC95 /* PhotoPickerWrapper.swift */; };
+		BD4924742D975B250094DC95 /* SelectedImagesViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD4924732D975B250094DC95 /* SelectedImagesViews.swift */; };
 		BDA7A9AE2D94C87F0079D24C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA7A9AB2D94C87F0079D24C /* ContentView.swift */; };
 		BDA7A9AF2D94C87F0079D24C /* DesignAssignmentForHatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA7A9AC2D94C87F0079D24C /* DesignAssignmentForHatchApp.swift */; };
 		BDA7A9B02D94C87F0079D24C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BDA7A9A82D94C87F0079D24C /* Preview Assets.xcassets */; };
@@ -45,6 +46,7 @@
 /* Begin PBXFileReference section */
 		BD49245E2D9680D00094DC95 /* PhotosPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosPickerView.swift; sourceTree = "<group>"; };
 		BD4924602D9683350094DC95 /* PhotoPickerWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerWrapper.swift; sourceTree = "<group>"; };
+		BD4924732D975B250094DC95 /* SelectedImagesViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedImagesViews.swift; sourceTree = "<group>"; };
 		BDA7A97B2D949C3B0079D24C /* DesignAssignmentForHatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DesignAssignmentForHatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDA7A98B2D949C3D0079D24C /* DesignAssignmentForHatchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DesignAssignmentForHatchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDA7A9952D949C3D0079D24C /* DesignAssignmentForHatchUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DesignAssignmentForHatchUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -152,6 +154,7 @@
 				BDA7A9B32D94C89F0079D24C /* TextInputView.swift */,
 				BDA7A9FD2D9533EA0079D24C /* ViewModel.swift */,
 				BDA7AA542D9638220079D24C /* InputSheet.swift */,
+				BD4924732D975B250094DC95 /* SelectedImagesViews.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -349,6 +352,7 @@
 				BDA7A9B42D94C89F0079D24C /* TextInputView.swift in Sources */,
 				BDA7A9FE2D9533EA0079D24C /* ViewModel.swift in Sources */,
 				BDA7A9B72D94EFA20079D24C /* WrappedUITextView.swift in Sources */,
+				BD4924742D975B250094DC95 /* SelectedImagesViews.swift in Sources */,
 				BD49245F2D9680D00094DC95 /* PhotosPickerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
