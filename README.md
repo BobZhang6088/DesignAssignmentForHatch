@@ -36,7 +36,6 @@ If you want to run the app on a real device:
 
 ## Vide Demo
 
-You can find "VideoDemo.mov" in the root directory of the project
-
-
 [Click to play the video](VideoDemo.mov)
+
+If the video doesn't play in your browser, you can find "VideoDemo.mov" in the root directory of this project. Please download it to your computer and play it locally.
