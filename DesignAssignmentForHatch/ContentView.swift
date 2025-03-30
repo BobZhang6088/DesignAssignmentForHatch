@@ -17,6 +17,7 @@ struct ContentView: View {
     @State var inputViewTopY: CGFloat = 0
     @State var inputViewExpanded: Bool = false
     @State var imagePickerExpanded: Bool = false
+    @State private var shouldAnimateInputViewTopY = false  // <== 关键变量
 
     var body: some View {
             ZStack(alignment:.bottom) {
@@ -52,9 +53,18 @@ struct ContentView: View {
                 }
                 InputSheet(expanded: $inputViewExpanded, imagePickerExpanded: $imagePickerExpanded) { y in
                     if !inputViewExpanded {
-                        withAnimation {
+                        if shouldAnimateInputViewTopY {
+                            withAnimation {
+                                inputViewTopY = y
+                            }
+                        } else {
                             inputViewTopY = y
+                            // 只在第一次或几次后开启动画
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                shouldAnimateInputViewTopY = true
+                            }
                         }
+                        print("inputViewTopY \(inputViewTopY)")
                     }
                 }
             }
