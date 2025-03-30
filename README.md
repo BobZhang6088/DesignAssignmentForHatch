@@ -5,11 +5,11 @@
 ### 2.	Clone or Download the Repository
 - Clone with Git:
   ```
-  git clone https://github.com/your-username/your-repo-name.git
+  git clone https://github.com/BobZhang6088/DesignAssignmentForHatch.git
   ```
 
 
-- Or download the ZIP file and extract it.
+- Or clike  [Code] > Download ZIP and extract it.
 
 ### 3.	Open the Project in Xcode
 - Navigate to the project folder and double-click DesignAssignmentForHatch.xcodeproj.
@@ -38,7 +38,5 @@ If you want to run the app on a real device:
 
 You can find "VideoDemo.mov" in the root directory of the project
 
-<video width="640" height="360" controls>
-  <source src="./VideoDemo.mov" type="video/mov">
-  Your browser does not support the video tag.
-</video>
+
+[Click to play the video](VideoDemo.mov)
