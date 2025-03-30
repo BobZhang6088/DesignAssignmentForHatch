@@ -17,35 +17,59 @@ struct PhotoPickerWrapper: View {
     
     @State var realHeight: CGFloat = UIScreen.main.bounds.height * 0.4
     @State var enableHighPriorityGesture: Bool = true
+    @State var toolbarOpacity: CGFloat = 0
+    @State var toolbarHeight: CGFloat = 0
     
     let originalHeight: CGFloat = UIScreen.main.bounds.height * 0.4
     @State var lastHeight = UIScreen.main.bounds.height * 0.4
     let maxHeight: CGFloat = UIScreen.main.bounds.height - 88 - UIApplication.shared.statusBarHeight
     
     var body: some View {
-        VStack {
-            Capsule()
-                .frame(width: 40, height: 6)
-                .foregroundColor(.gray)
-                .padding(8)
+        VStack(spacing: 0) {
+            ZStack(alignment: .top) {
+                HStack {
+                    Button("Clear") {
+                        selectedAssets.removeAll()
+                    }
+                    .fontWeight(.semibold)
+                    Spacer()
+                    Button("Done") {
+                        dismiss()
+                    }
+                    .fontWeight(.semibold)
+                }
+                .padding(.horizontal)
+                .frame(height: toolbarHeight)
+                .opacity(Double(toolbarOpacity))
+                Capsule()
+                    .frame(width: 40, height: 6)
+                    .foregroundColor(.gray)
+                    .padding(8)
+            }
+            .background(Color(.systemGray6))
+            .clipShape(RoundedCorner(radius: 20 * toolbarOpacity, corners: [.topLeft, .topRight]))
+
+            
             PhotosPickerView(maxSelection: 9, selectedAssets: $selectedAssets, onSelection: onSelection)
-            .onScrollGeometryChange(for: CGFloat.self) { geometry in
-                geometry.contentOffset.y
-            } action: { oldValue, newValue in
-                if oldValue != newValue {
-                    if expanded {
-                        if newValue < 0 {enableHighPriorityGesture = true}
-                    } else {
-                        enableHighPriorityGesture = true
+                .onScrollGeometryChange(for: CGFloat.self) { geometry in
+                    geometry.contentOffset.y
+                } action: { oldValue, newValue in
+                    if oldValue != newValue {
+                        if expanded {
+                            if newValue < 0 {enableHighPriorityGesture = true}
+                        } else {
+                            enableHighPriorityGesture = true
+                        }
                     }
                 }
-            }
-            .onAppear {
-                height = originalHeight
-            }
+                .onAppear {
+                    height = originalHeight
+                }
+                .background(Color(.systemGray6))
         }
         .frame(height:realHeight)
-        .highPriorityGesture(
+        .contentShape(Rectangle())
+        .simultaneousGesture(
             DragGesture(coordinateSpace: .global)
                 .onChanged { value in
                     print(value.translation)
@@ -55,10 +79,7 @@ struct PhotoPickerWrapper: View {
                 .onEnded { _ in
                     withAnimation {
                         if realHeight < originalHeight * 0.5 {
-                            realHeight = 0
-                            height = 0
-                            presenting = false
-                            expanded = false
+                            dismiss()
                             enableHighPriorityGesture = false
                         } else if realHeight > originalHeight * 1.5 {
                             realHeight = maxHeight
@@ -74,8 +95,29 @@ struct PhotoPickerWrapper: View {
                     }
                     lastHeight = realHeight
                 }
-            ,isEnabled: enableHighPriorityGesture
-        )
+
+            , isEnabled: true)
+        .onChange(of: realHeight) { oldValue, newValue in
+            var opacity = (realHeight - (maxHeight - 150)) / 150
+            opacity = max(0, min(1, opacity))
+            
+            // 控制高度
+            let maxHeight: CGFloat = 64
+            let minHeight: CGFloat = 0
+            let dynamicHeight = minHeight + (maxHeight - minHeight) * opacity
+            
+            withAnimation {
+                toolbarOpacity = opacity
+                toolbarHeight = dynamicHeight
+            }
+        }
+    }
+    
+    func dismiss() {
+        realHeight = 0
+        height = 0
+        presenting = false
+        expanded = false
     }
 }
 

@@ -35,6 +35,8 @@ struct InputSheet: View {
     @State var selectedImages: [PHAsset] = []
     var body: some View {
         ZStack(alignment: .bottom) {
+            Color.red
+                .layoutPriority(-1)
             VStack {
                 HStack(alignment: .top) {
                     TextInputView(text: $message, expanded: $expanded, placeholder: "Start Typing...")
@@ -105,7 +107,7 @@ struct InputSheet: View {
                 //                        .transition(.move(edge: .bottom).combined(with: .opacity))
                 //                        .animation(.easeInOut(duration: 0.3), value: presentingImagePicker)
             }
-            .background(Color(.systemGray6))
+//            .background(Color(.systemGray6))
             .clipShape(RoundedCorner(radius: 20, corners: [.topLeft, .topRight]))
             .background(alignment: .top) {
                 RoundedCorner(radius: 20, corners: [.topLeft, .topRight])
@@ -113,16 +115,18 @@ struct InputSheet: View {
                     .frame(height: 30)
                     .shadow(color:.black.opacity(0.1), radius: 3, x: 0, y: -4)
             }
-            .padding(.top, expanded ? 44: 0)
-            .onChange(of: expanded) { newValue in
+//            .padding(.top, expanded ? 44: 0)
+            .onChange(of: expanded) { _, newValue in
                 inputViewFocused = true
             }
-            .onChange(of: presentingImagePicker) { newValue in
+            .onChange(of: presentingImagePicker) { _,  newValue in
                 if newValue {
                     inputViewFocused = false
+                } else if expanded {
+                    inputViewFocused = true
                 }
             }
-            .onChange(of: inputViewFocused) { newValue in
+            .onChange(of: inputViewFocused) { _, newValue in
                 if newValue {
                     presentingImagePicker = false
                 }
@@ -140,15 +144,14 @@ struct InputSheet: View {
                 })
                 //                .frame(alignment: .top)
                 .transition(.move(edge: .bottom).combined(with: .opacity))
-                .animation(.easeInOut(duration: 0.2), value: presentingImagePicker)
-                .background(Color(.systemGray6))
+                .animation(.default, value: presentingImagePicker)
             }
             if inputViewFocused {
                 Color(.systemGray6)
                     .frame(height: bottomPadding)
             }
         }
-        .animation(.easeInOut(duration: 0.2), value: presentingImagePicker)
+        .animation(.default, value: presentingImagePicker)
     }
     
 //    func updatePadding() {

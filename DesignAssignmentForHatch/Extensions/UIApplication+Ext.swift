@@ -15,4 +15,10 @@ extension UIApplication {
             .first
         return window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
     }
+    var  safeAreaInsets: UIEdgeInsets{
+        let window = UIApplication.shared.connectedScenes
+            .compactMap { ($0 as? UIWindowScene)?.keyWindow }
+            .first
+        return window?.windowScene?.windows.first?.safeAreaInsets ?? .zero
+    }
 }
