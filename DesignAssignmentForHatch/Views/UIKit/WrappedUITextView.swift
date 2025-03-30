@@ -14,7 +14,7 @@ struct WrappedUITextView: UIViewRepresentable {
     let fontSize: CGFloat
     
     var onTextChanged: ((_ deleting: Bool, _ textHeight: CGFloat) -> Void)?
-    
+    var onContentSizeChanged: ((_ contentSize: CGSize) -> Void)?
     
 
     func makeCoordinator() -> Coordinator {
@@ -30,6 +30,7 @@ struct WrappedUITextView: UIViewRepresentable {
         if text != "" {
             textView.becomeFirstResponder()
         }
+        context.coordinator.observeContentSize(of: textView)
         return textView
     }
     
@@ -51,8 +52,16 @@ struct WrappedUITextView: UIViewRepresentable {
     class Coordinator: NSObject, UITextViewDelegate {
         var parent: WrappedUITextView
         var deleting: Bool = false
+        var observation: NSKeyValueObservation?
         init(parent: WrappedUITextView) {
             self.parent = parent
+        }
+        func observeContentSize(of textView: UITextView) {
+            observation = textView.observe(\.contentSize, options: [.new]) { [weak self] textView, change in
+                guard let self = self else { return }
+                print("📏 contentSize changed: \(textView.contentSize)")
+                self.parent.onContentSizeChanged?(textView.contentSize)
+            }
         }
         
         func textView(_ textView: UITextView,

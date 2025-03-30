@@ -6,17 +6,56 @@
 //
 
 import SwiftUI
-
+fileprivate let biggestFontSize: CGFloat = 18
 struct TextInputView: View {
     @Binding var text: String
     @Binding var expanded: Bool
     @State private var threelineHeight: CGFloat = 0
     var placeholder: String
-    @State var fontSize: CGFloat = 18
+    var fontSize: CGFloat  {
+        expanded ? biggestFontSize : fontSizeNotExpanded
+    }
     private let measuringText = "A\nB\nC" // your reference text
+    @State private var fontSizeNotExpanded: CGFloat = biggestFontSize
+
+    @State private var debounceWorkItem: DispatchWorkItem?
     
-    func calculateHeight() -> CGFloat {
-        let size = CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
+    @State private var textviewConstentSize: CGSize =  CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)
+    
+
+    func scheduleFontSizeUpdate(height: CGFloat, deleting: Bool) {
+        let delayTime: TimeInterval = 0.1
+        debounceWorkItem?.cancel()
+        
+        var height = height
+        let workItem = DispatchWorkItem {
+            var font:CGFloat = fontSizeNotExpanded
+            if deleting {
+                while height <= threelineHeight/2 && font < 18 {
+                    font += 2
+                    height = calculateHeight(wiht: text, fontSize: font)
+                }
+            } else {
+                while height >= threelineHeight*2/3 && font > 14 {
+                    font -= 2
+                    height = calculateHeight(wiht: text, fontSize: font)
+                }
+            }
+            if font != fontSizeNotExpanded {
+                withAnimation(.easeInOut(duration: 0.5)) {
+                    fontSizeNotExpanded = font
+                }
+                print("fontSizeNotExpanded \(fontSizeNotExpanded)")
+            }
+        }
+
+        debounceWorkItem = workItem
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + delayTime, execute: workItem)
+    }
+    
+    func calculateHeight(wiht string: String, fontSize: CGFloat) -> CGFloat {
+        let size = CGSize(width: textviewConstentSize.width, height: CGFloat.greatestFiniteMagnitude)
         
         let paragraphStyle = NSMutableParagraphStyle()
         
@@ -24,7 +63,7 @@ struct TextInputView: View {
             .font: UIFont.systemFont(ofSize: fontSize),
             .paragraphStyle: paragraphStyle
         ]
-        let total = measuringText.boundingRect(
+        let total = string.boundingRect(
             with: size,
             options: .usesLineFragmentOrigin,
             attributes: attributes,
@@ -37,25 +76,13 @@ struct TextInputView: View {
     var body: some View {
         ZStack(alignment: .topLeading) {
             WrappedUITextView(text: $text, fontSize: fontSize) { deleting, height in
-                if expanded {
-                    return
-                }
-                var offset:CGFloat = 0
-                if deleting {
-                    if height <= threelineHeight/2 && fontSize < 18{
-                        offset = 2
-                    }
-                } else {
-                    if height >= threelineHeight*2/3 && fontSize > 14 {
-                        offset = -2
-                    }
-                }
-                if offset != 0 {
-                    withAnimation(.easeInOut(duration: 0.5)) {
-                        fontSize += offset
-                    }
-                }
+                scheduleFontSizeUpdate(height: height, deleting: deleting)
             }
+            .onGeometryChange(for: CGSize.self, of: { geo in
+                geo.size
+            }, action: { oldValue, newValue in
+                textviewConstentSize = newValue
+            })
                 .id(fontSize)
                 .frame(maxHeight: expanded ?.infinity: threelineHeight)
                 .transition(.opacity)
@@ -67,7 +94,7 @@ struct TextInputView: View {
         }
         .font(.system(size: fontSize))
         .onAppear {
-            self.threelineHeight = self.calculateHeight() + 5
+            self.threelineHeight = self.calculateHeight(wiht: measuringText, fontSize: biggestFontSize) + 5
         }
     }
 }
