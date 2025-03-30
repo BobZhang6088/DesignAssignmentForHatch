@@ -15,8 +15,8 @@
 - Navigate to the project folder and double-click DesignAssignmentForHatch.xcodeproj.
  This will open the project in Xcode.
 	
-### 4.	Select a Simulator
-- In the toolbar near the top of Xcode, choose an available simulator device.
+### 4.	Select a Simulator or Device
+- In the toolbar near the top of Xcode, choose an available simulator or device.
 ![Simulator](./How%20to%20run/select_a_simulator.png)
 ### 5. Run the App
 - Click the ▶️ (Play) button in the top-left corner of Xcode to build and run the app on the selected simulator.
@@ -27,8 +27,8 @@
 
 Note:
 If you want to run the app on a real device:
-	•	Make sure you’re signed in with your Apple Developer account in Xcode.
-	•	Update the Bundle Identifier in the project settings to something unique.
+- Make sure you’re signed in with your Apple Developer account in Xcode.
+- Update the Bundle Identifier in the project settings to something unique.
 
 ![change_bundleID](./How%20to%20run/change_bundleID.png)
 
