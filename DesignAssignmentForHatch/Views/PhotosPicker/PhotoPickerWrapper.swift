@@ -30,6 +30,7 @@ struct PhotoPickerWrapper: View {
                 HStack {
                     Button("Clear") {
                         selectedAssets.removeAll()
+                        dismiss()
                     }
                     .fontWeight(.semibold)
                     Spacer()
