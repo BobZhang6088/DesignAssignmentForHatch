@@ -10,7 +10,6 @@ import UIKit
 
 struct WrappedUITextView: UIViewRepresentable {
     @Binding var text: String
-//    @Binding var lineCount: Int
     let fontSize: CGFloat
     
     var onTextChanged: ((_ deleting: Bool, _ textHeight: CGFloat) -> Void)?
@@ -41,7 +40,7 @@ struct WrappedUITextView: UIViewRepresentable {
 //        if text != "" {
 //            uiView.becomeFirstResponder()
 //        }
-//        uiView.font = UIFont.systemFont(ofSize: fontSize)
+        uiView.font = UIFont.systemFont(ofSize: fontSize)
 
         // Update line count after text changes
 //        DispatchQueue.main.async {

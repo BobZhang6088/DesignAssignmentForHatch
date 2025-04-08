@@ -83,9 +83,7 @@ struct TextInputView: View {
             }, action: { oldValue, newValue in
                 textviewConstentSize = newValue
             })
-                .id(fontSize)
                 .frame(maxHeight: expanded ?.infinity: threelineHeight)
-                .transition(.opacity)
             if text.isEmpty {
                 Text(placeholder)
                     .foregroundColor(Color.gray.opacity(0.5))
