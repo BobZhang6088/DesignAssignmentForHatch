@@ -8,8 +8,6 @@
 import SwiftUI
 import Photos
 
-//let inputViewFixedHeight: CGFloat = 154
-
 struct ContentView: View {
     @State var inputViewTopY: CGFloat = 0
     @State var imagePickerExpanded: Bool = false
@@ -38,20 +36,7 @@ struct ContentView: View {
         return 154 + (selectedImages.count > 0 ? 75 : 0)
     }
     
-    
     var inputViewHeight: CGFloat {
-//        let inputViewFixedHeight:CGFloat = 154 + (selectedImages.count > 0 ? 75 : 0)
-//        if inputViewDragging {
-//            if inputViewExpanded {
-//                let newHeight = inputViewMaxHeight - inputDragOffsetY
-//                return max(min(newHeight, inputViewMaxHeight),inputViewFixedHeight)
-//            } else {
-//                let newHeight = inputViewFixedHeight - inputDragOffsetY
-//                return max(min(newHeight, inputViewMaxHeight),inputViewFixedHeight)
-//            }
-//        } else {
-//            
-//        }
         if viewModel.inputViewExpanded {
             return inputViewMaxHeight
         } else {
@@ -59,36 +44,10 @@ struct ContentView: View {
         }
     }
     
-//    var inputViewBottomPadding: CGFloat {
-//        if inputViewFocused {
-//            print("inputViewBottomPadding",geometryObj.keyboardHeight)
-//            return geometryObj.keyboardHeight
-//        } else if presentingImagePicker {
-//            print("inputViewBottomPadding",photoPickerFixedHeight)
-//            return photoPickerFixedHeight
-//        } else {
-//            print("inputViewBottomPadding",0)
-//            return 0
-//        }
-//    }
-    
     var inputViewMaxHeight: CGFloat {
         viewModel.rootSize.height - viewModel.inputViewBottomPadding - viewModel.safeAreaInsets.top
     }
-    
-    
-//    func updateInputViewBottomPadding() {
-//        if inputViewFocused {
-//            print("inputViewBottomPadding",geometryObj.keyboardHeight)
-//            inputViewBottomPadding = geometryObj.keyboardHeight
-//        } else if presentingImagePicker {
-//            print("inputViewBottomPadding",photoPickerFixedHeight)
-//            inputViewBottomPadding = photoPickerFixedHeight
-//        } else {
-//            print("inputViewBottomPadding",0)
-//            inputViewBottomPadding = 0
-//        }
-//    }
+
     var VStackOffsetY: CGFloat {
         -viewModel.inputViewBottomPadding - min(inputViewHeight, inputViewFixedHeight)
     }
@@ -158,82 +117,12 @@ struct ContentView: View {
                                 viewModel.inputViewDragging = false
                             }
                     )
-//                    .gesture(
-//                        DragGesture(coordinateSpace: .global)
-//                            .onChanged({ value in
-//                                if !inputViewFocused && !geometryObj.presentingImagePicker && !inputViewExpanded{
-//                                    if value.translation.height < 0 {
-//                                        inputViewFocused = true
-//                                        return
-//                                    }
-//                                }
-//                                if inputViewFocused && !inputViewExpanded {
-//                                    if value.translation.height > 0 {
-//                                        inputViewFocused = false
-//                                        return
-//                                    }
-//                                }
-//                            })
-//                            .updating($inputDragOffsetY, body: { value, state, tran in
-//                                state = value.translation.height
-//                                inputViewDragging = true
-//                            })
-//                            .onEnded({ value in
-//                                if inputViewExpanded {
-//                                    let newHeight = inputViewMaxHeight - value.translation.height
-//                                    if newHeight < inputViewMaxHeight - 30 {
-//                                        inputViewExpanded = false
-//                                    }
-//                                } else {
-//                                    let newHeight = inputViewFixedHeight - value.translation.height
-//                                    if newHeight > inputViewFixedHeight + 100 {
-//                                        inputViewExpanded = true
-//                                    }
-//                                }
-//                                inputViewDragging = false
-//                                
-//                            })
-//                    )
-//                    .gesture(DragGesture(coordinateSpace: .global)
-//                        .onChanged{value in
-//                            if !inputViewDragging {
-//                                lastHeightOfInputView = inputViewHeight
-//                            }
-//                            inputViewDragging = true
-//                            let drageHeight = lastHeightOfInputView - value.translation.height
-//                            if !inputViewFocused && !presentingImagePicker && !inputViewExpanded{
-//                                if value.translation.height < 0 {
-//                                    inputViewFocused = true
-//                                    return
-//                                }
-//                            }
-//                            if inputViewFocused && !inputViewExpanded {
-//                                if value.translation.height > 0 {
-//                                    inputViewFocused = false
-//                                    return
-//                                }
-//                            }
-//                            inputViewHeight = min(max(inputViewFixedHeight, drageHeight), inputViewMaxHeight)
-//                            
-//                        }
-//                        .onEnded { value in
-//                            inputViewDragging = false
-//                            if inputViewHeight - inputViewFixedHeight < (inputViewMaxHeight - inputViewFixedHeight) / 2 {
-//                                inputViewHeight = inputViewFixedHeight
-//                                inputViewExpanded = false
-//                            } else {
-//                                inputViewHeight = inputViewMaxHeight
-//                                inputViewExpanded = true
-//                            }
-//                        })
                     .onReceive(viewModel.$inputViewFocused, perform: { value in
                         inputViewFocused = value
                     })
                     .padding(.bottom, viewModel.inputViewBottomPadding)
                     .animation(.easeIn(duration: 0.25), value: inputViewHeight)
                     .animation(.easeIn(duration: 0.25), value: viewModel.inputViewBottomPadding)
-//                    .offset(x:0, y:-inputViewBottomPadding)
-//                    .ignoresSafeArea()
             }
             .overlay(alignment:.bottom) {
                 if viewModel.presentingImagePicker {
@@ -259,12 +148,6 @@ struct ContentView: View {
             })
             .ignoresSafeArea()
         }
-        .onGeometryChange(for: EdgeInsets.self, of: { proxy in
-            proxy.safeAreaInsets
-        }, action: { newValue in
-            print(newValue)
-//            geometryObj.safeAreaInsets = newValue
-        })
         .onChange(of: inputViewFocused, { oldValue, newValue in
             if newValue {
                 viewModel.presentingImagePicker = false
