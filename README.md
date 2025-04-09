@@ -39,3 +39,19 @@ If you want to run the app on a real device:
 [Click to play the video](VideoDemo.mov)
 
 If the video doesn't play in your browser, you can find "VideoDemo.mov" in the root directory of this project. Please download it to your computer and play it locally.
+
+## Response to the Assignment Feedback
+
+### 1. Sheet Gesture Behavior
+
+In iOS, the keyboard’s presentation and dismissal are controlled by the system and can’t be interactively driven with the gesture itself. However, I added a drag gesture to the sheet that tracks the user’s finger. When the sheet is dragged upwards beyond half the keyboard height, it triggers the keyboard to appear. Similarly, dragging downward dismisses the keyboard. This creates a responsive interaction while working within iOS system constraints.
+
+### 2. Text Resizing Animation
+
+I’ve removed the fade effect as suggested. I did try implementing a resizing transition, but it looked slightly off and less natural in this context. I believe having no animation here results in a cleaner experience.
+
+### 3. Layout Glitch on Expansion
+
+I’ve fixed the layout issue that occurred when the sheet expanded to full screen with an attached image.
+
+Please feel free to download and run the updated version. I’ve also included an updated video demo (VideoDemo.mov) in the root directory of the project.
