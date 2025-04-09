@@ -1,14 +1,14 @@
 //
-//  PhotoPickerWrapper.swift
+//  PhotoPickerDrawer.swift
 //  DesignAssignmentForHatch
 //
-//  Created by Bob Zhang on 2025-03-28.
+//  Created by Bob Zhang on 2025-04-08.
 //
 
 import SwiftUI
 import Photos
 
-struct PhotoPickerWrapper: View {
+struct PhotoPickerDrawer: View {
     @Binding var presenting: Bool
     @Binding var expanded: Bool
     @Binding var height: CGFloat
@@ -22,8 +22,8 @@ struct PhotoPickerWrapper: View {
     
     let originalHeight: CGFloat = UIScreen.main.bounds.height * 0.4
     @State var lastHeight = UIScreen.main.bounds.height * 0.4
-//    let maxHeight: CGFloat = UIScreen.main.bounds.height - 88 - UIApplication.shared.statusBarHeight
-    @EnvironmentObject var viewModel: ViewModel
+    let maxHeight: CGFloat = UIScreen.main.bounds.height - 88 - UIApplication.shared.statusBarHeight
+    
     var body: some View {
         VStack(spacing: 0) {
             ZStack(alignment: .top) {
@@ -74,7 +74,7 @@ struct PhotoPickerWrapper: View {
             DragGesture(coordinateSpace: .global)
                 .onChanged { value in
                     print(value.translation)
-                    realHeight = min(max(lastHeight - value.translation.height,0), viewModel.photoPickerMaxHeight)
+                    realHeight = min(max(lastHeight - value.translation.height,0), maxHeight)
                     height = min(realHeight,originalHeight)
                 }
                 .onEnded { _ in
@@ -83,7 +83,7 @@ struct PhotoPickerWrapper: View {
                             dismiss()
                             enableHighPriorityGesture = false
                         } else if realHeight > originalHeight * 1.5 {
-                            realHeight = viewModel.photoPickerMaxHeight
+                            realHeight = maxHeight
                             height = originalHeight
                             expanded = true
                             enableHighPriorityGesture = false
@@ -99,7 +99,7 @@ struct PhotoPickerWrapper: View {
 
             , isEnabled: true)
         .onChange(of: realHeight) { oldValue, newValue in
-            var opacity = (realHeight - (viewModel.photoPickerMaxHeight - 150)) / 150
+            var opacity = (realHeight - (maxHeight - 150)) / 150
             opacity = max(0, min(1, opacity))
             
             // 控制高度
@@ -123,5 +123,5 @@ struct PhotoPickerWrapper: View {
 }
 
 #Preview {
-//    PhotoPickerWrapper()
+//    PhotoPickerDrawer()
 }

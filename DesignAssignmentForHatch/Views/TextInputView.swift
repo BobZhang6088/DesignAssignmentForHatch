@@ -83,7 +83,7 @@ struct TextInputView: View {
             }, action: { oldValue, newValue in
                 textviewConstentSize = newValue
             })
-                .frame(maxHeight: expanded ?.infinity: threelineHeight)
+//                .frame(maxHeight: expanded ?.infinity: threelineHeight)
             if text.isEmpty {
                 Text(placeholder)
                     .foregroundColor(Color.gray.opacity(0.5))

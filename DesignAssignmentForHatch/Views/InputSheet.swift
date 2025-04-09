@@ -24,13 +24,14 @@ struct InputSheet: View {
     @State var presentingImagePicker: Bool = false
     var bottomPadding: CGFloat {
         if inputViewFocused {
-            return keyboard.keyboardHeight == 0 ? 0 : keyboard.keyboardHeight - 34
+            return keyboard.keyboardHeight
         } else if presentingImagePicker {
             return photoPickerHeight
         } else {
             return 0
         }
     }
+    @EnvironmentObject var rootGeometry: ViewModel
 
     @State var selectedImages: [PHAsset] = []
     var body: some View {
