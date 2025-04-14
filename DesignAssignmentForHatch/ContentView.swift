@@ -9,29 +9,12 @@ import SwiftUI
 import Photos
 
 struct ContentView: View {
-    @State var inputViewTopY: CGFloat = 0
-    @State var imagePickerExpanded: Bool = false
-    @State private var shouldAnimateInputViewTopY = false
-    @StateObject private var viewModel = ViewModel()
-    
     let rootCoordinateSpace = "rootCoordinateSpace"
-    @State var inputViewFrame = CGRect.zero
-    @State var photoPickerHeight: CGFloat = 0
-    
+
+    @StateObject private var viewModel = ViewModel()
     @FocusState var inputViewFocused
-    
     @State var selectedImages: [PHAsset] = []
     
-    let photoPickerFixedHeight: CGFloat = UIScreen.main.bounds.height * 0.4
-    
-    @GestureState private var inputDragOffsetY: CGFloat = .zero
-    @State private var lastHeightOfInputView: CGFloat = .zero
-    @State private var inputViewDragging: Bool = false
-
-    @GestureState private var photoPickerDragOffsetY: CGFloat = .zero
-    @State private var lastHeightOfPhotoPicker: CGFloat = .zero
-    @State private var photoPickerDragging: Bool = false
-
     var inputViewFixedHeight: CGFloat {
         return 154 + (selectedImages.count > 0 ? 75 : 0)
     }
@@ -82,7 +65,7 @@ struct ContentView: View {
                 .ignoresSafeArea()
             }
             .overlay {
-                if viewModel.inputViewExpanded || imagePickerExpanded {
+                if viewModel.inputViewExpanded || viewModel.imagePickerExpanded {
                     Color.black.opacity(0.5).ignoresSafeArea()
                 }
             }
@@ -101,11 +84,6 @@ struct ContentView: View {
                     .onChange(of: inputViewFocused, { oldValue, newValue in
                         viewModel.inputViewFocused = newValue
                     })
-                    .onGeometryChange(for: CGRect.self) { proxy in
-                        proxy.frame(in: .named(rootCoordinateSpace))
-                    } action: { newValue in
-                        inputViewFrame = newValue
-                    }
                     .frame(height: inputViewHeight)
                     .gesture(
                         DragGesture(coordinateSpace: .global)
@@ -126,8 +104,8 @@ struct ContentView: View {
             }
             .overlay(alignment:.bottom) {
                 if viewModel.presentingImagePicker {
-                    PhotoPickerWrapper(presenting: $viewModel.presentingImagePicker, expanded: $imagePickerExpanded, height: $photoPickerHeight, selectedAssets: $selectedImages, onSelection: { images in
-                        if imagePickerExpanded {
+                    PhotoPickerWrapper(presenting: $viewModel.presentingImagePicker, expanded: $viewModel.imagePickerExpanded, height: $viewModel.photoPickerHeight, selectedAssets: $selectedImages, onSelection: { images in
+                        if viewModel.imagePickerExpanded {
                             
                         } else {
                             viewModel.presentingImagePicker = false
@@ -167,16 +145,4 @@ struct ContentView: View {
 }
 
 
-struct RoundedCorner: Shape {
-    var radius: CGFloat = .infinity
-    var corners: UIRectCorner = .allCorners
 
-    func path(in rect: CGRect) -> Path {
-        let path = UIBezierPath(
-            roundedRect: rect,
-            byRoundingCorners: corners,
-            cornerRadii: CGSize(width: radius, height: radius)
-        )
-        return Path(path.cgPath)
-    }
-}

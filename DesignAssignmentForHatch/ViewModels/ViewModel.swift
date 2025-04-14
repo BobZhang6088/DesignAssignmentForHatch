@@ -13,25 +13,28 @@ class ViewModel: ObservableObject {
     var safeAreaInsets: UIEdgeInsets {
         UIApplication.shared.safeAreaInsets
     }
+    
     @Published var rootSize: CGSize = .zero
     @Published var keyboardHeight: CGFloat = 0
+    
     @Published var inputViewFocused:Bool = false
     @Published var presentingImagePicker: Bool = false
     @Published var inputViewBottomPadding: CGFloat = 0
     @Published var inputViewExpanded: Bool = false
-    
     @Published var inputDragOffsetY: CGFloat = 0
     @Published var inputViewDragging: Bool = false
-    
     var lastInputViewBottomPadding: CGFloat = 0
     var estimatedKeyboradHeight: CGFloat = 336
     var inputViewDragble = false
-    
     let photoPickerFixedHeight: CGFloat = UIScreen.main.bounds.height * 0.4
-    
     var photoPickerMaxHeight: CGFloat {
         return rootSize.height - safeAreaInsets.top
     }
+    
+    @Published var imagePickerExpanded: Bool = false
+    @Published var photoPickerHeight: CGFloat = 0
+
+
     
     private var cancellableSet: Set<AnyCancellable> = []
 
