@@ -116,20 +116,3 @@ class ViewModel: ObservableObject {
         
     }
 }
-
-
-extension Array where Element: Publisher {
-    func combineLatest() -> AnyPublisher<[Element.Output], Element.Failure> {
-        guard let first = self.first else {
-            return Empty(completeImmediately: true).eraseToAnyPublisher()
-        }
-        let initial = first.map { [$0] }.eraseToAnyPublisher()
-        return self.dropFirst().reduce(initial) { accumulated, next in
-            accumulated
-                .combineLatest(next) { combined, newValue in
-                    combined + [newValue]
-                }
-                .eraseToAnyPublisher()
-        }
-    }
-}

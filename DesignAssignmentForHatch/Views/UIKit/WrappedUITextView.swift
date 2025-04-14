@@ -66,12 +66,6 @@ struct WrappedUITextView: UIViewRepresentable {
         func textView(_ textView: UITextView,
                       shouldChangeTextIn range: NSRange,
                       replacementText text: String) -> Bool {
-            if text.isEmpty && range.length > 0 {
-                print("🗑 正在删除字符")
-                
-            } else {
-                print("✍️ 正在输入字符: \(text)")
-            }
             deleting = text.isEmpty && range.length > 0
             
             return true

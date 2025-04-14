@@ -33,7 +33,7 @@ struct InputDrawer: View {
             .padding()
 
             if !selectedImages.isEmpty {
-                SelectedImagesViews(images: $selectedImages)
+                SelectedImagesView(images: $selectedImages)
                     .transition(.opacity)
             }
             HStack {

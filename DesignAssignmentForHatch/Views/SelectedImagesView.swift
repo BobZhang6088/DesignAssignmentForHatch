@@ -13,16 +13,13 @@ struct ImageItem: Identifiable, Equatable {
     let image: PHAsset
 }
 
-struct SelectedImagesViews: View {
+struct SelectedImagesView: View {
     @Binding var images: [PHAsset]
     let itemSize:CGFloat = 50
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHGrid(rows: [GridItem(.fixed(itemSize))], spacing: 10) {
                 ForEach(images, id: \.localIdentifier) { item in
-//                    SelectedGridItem(asset: item, onDelete: {
-//                        
-//                    })
                     SelectedGridItem(asset: item) {
                         images.removeAll { $0.localIdentifier == item.localIdentifier }
                     }
